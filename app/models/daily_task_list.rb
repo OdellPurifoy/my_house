@@ -1,0 +1,2 @@
+class DailyTaskList < ApplicationRecord
+end

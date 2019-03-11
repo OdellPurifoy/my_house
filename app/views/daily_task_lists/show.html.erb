@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @daily_task_list.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @daily_task_list.description %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= @daily_task_list.completed %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @daily_task_list.user_id %>
+</p>
+
+<p>
+  <strong>Task:</strong>
+  <%= @daily_task_list.task_id %>
+</p>
+
+<%= link_to 'Edit', edit_daily_task_list_path(@daily_task_list) %> |
+<%= link_to 'Back', daily_task_lists_path %>
