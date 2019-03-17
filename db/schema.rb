@@ -10,14 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_11_201704) do
+ActiveRecord::Schema.define(version: 2019_03_11_205426) do
 
   create_table "daily_task_lists", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
+    t.string "title", default: "", null: false
+    t.text "description", default: "", null: false
     t.boolean "completed"
     t.integer "user_id"
     t.integer "task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.text "description", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
