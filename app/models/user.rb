@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :daily_task_lists
   has_many :tasks, through: :daily_task_lists
 
+  enum status: %i[reg_user admin]
+
   def email_display
     email = email if email.present?
     "Welcome #{email}"
