@@ -1,5 +1,5 @@
 class DailyTaskListsController < ApplicationController
-  before_action :set_daily_task_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_daily_task_list, only: %i[show edit update destroy]
 
   # GET /daily_task_lists
   # GET /daily_task_lists.json
@@ -9,8 +9,7 @@ class DailyTaskListsController < ApplicationController
 
   # GET /daily_task_lists/1
   # GET /daily_task_lists/1.json
-  def show
-  end
+  def show; end
 
   # GET /daily_task_lists/new
   def new
@@ -18,13 +17,18 @@ class DailyTaskListsController < ApplicationController
   end
 
   # GET /daily_task_lists/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /daily_task_lists
   # POST /daily_task_lists.json
   def create
     @daily_task_list = DailyTaskList.new(daily_task_list_params)
+    params[:daily_task_list][:task_id].each do |task_id|
+      unless task_id.empty?
+        task = Task.find(task_id)
+        @daily_task_list.task << task
+      end
+    end
 
     respond_to do |format|
       if @daily_task_list.save
@@ -40,6 +44,13 @@ class DailyTaskListsController < ApplicationController
   # PATCH/PUT /daily_task_lists/1
   # PATCH/PUT /daily_task_lists/1.json
   def update
+    params[:daily_task_list][:task_id].each do |task_id|
+      unless task_id.empty?
+        task = Task.find(task_id)
+        @daily_task_list.task << task
+      end
+    end
+
     respond_to do |format|
       if @daily_task_list.update(daily_task_list_params)
         format.html { redirect_to @daily_task_list, notice: 'Daily task list was successfully updated.' }
@@ -62,13 +73,14 @@ class DailyTaskListsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_daily_task_list
-      @daily_task_list = DailyTaskList.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def daily_task_list_params
-      params.require(:daily_task_list).permit(:title, :description, :completed, :user_id, :task_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_daily_task_list
+    @daily_task_list = DailyTaskList.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def daily_task_list_params
+    params.require(:daily_task_list).permit(:title, :description, :completed, :user_id, :task_id)
+  end
 end
